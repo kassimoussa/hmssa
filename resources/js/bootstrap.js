@@ -1,12 +1,10 @@
-import 'bootstrap';
-import _ from 'lodash';
-window._ = _;
+window._ = require('lodash');
 
-import * as Popper from '@popperjs/core'
-window.Popper = Popper
+try {
+    require('bootstrap');
+} catch (e) {}
 
-import * as bootstrap from 'bootstrap';
-window.bootstrap = bootstrap;
+
 
 
 /**

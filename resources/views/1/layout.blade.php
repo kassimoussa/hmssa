@@ -23,21 +23,20 @@ $perms_ids = $perms->permissions->pluck('id');
 
     <title>{{ $page }}</title>
 
-
-    @vite(['resources/js/app.js'])
-
     @livewireStyles
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
 
     <!-- Styles -->
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/main2.css') }}">
     <link rel="stylesheet" href="{{ asset('css/flatpickr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap5.min.css') }}">
     <link rel="stylesheet" href="{{ asset('lib/main.css') }}">
     <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
     <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('js/flatpickr.js') }}"></script>
