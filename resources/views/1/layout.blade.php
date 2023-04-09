@@ -103,7 +103,7 @@ $perms_ids = $perms->permissions->pluck('id');
             <nav class="nav nav_">
                 <div class="nav_list">
                     <a href="/" class="nav_link mb-3 mt- @if($pageSlug == "index") activee @endif ">
-                        <i class='fa-solid fa-house-medical nav_icon ' data-bs-toggle=" tooltip"
+                        <i class='fa-solid fa-hospital nav_icon ' data-bs-toggle=" tooltip"
                         data-bs-placement="right" title="Accueil"></i>
                         <span class="nav_name">Accueil</span>
                     </a>
@@ -145,7 +145,7 @@ $perms_ids = $perms->permissions->pluck('id');
                         </a>
                     @endif
                     <a href="#" class="nav_link   @if($pageSlug == "laboratoire") activee @endif ">
-                        <i class='fa-solid fa-flask-vial nav_icon' data-bs-toggle="tooltip" data-bs-placement="right"
+                        <i class='fa-solid fa-flask nav_icon' data-bs-toggle="tooltip" data-bs-placement="right"
                         title="Laboratoire"></i>
                         <span class="nav_name">Laboratoire</span>
                     </a>

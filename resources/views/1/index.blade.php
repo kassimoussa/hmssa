@@ -8,7 +8,7 @@
         <x-card-icon icon="fa-users" title="Personnels " url="/personnel" text="Voir la liste de personnels" /> 
         <x-card-icon icon="fa-hospital-user" title="Patients " url="/patients" text="Voir la liste de patients" /> 
         <x-card-icon icon="fa-prescription-bottle-medical" title="Pharmacie " url="#" text="Voir la pharmacie " /> 
-        <x-card-icon icon="fa-flask-vial" title="Laboratoire " url="#" text="Voir le laboratoire" /> 
+        <x-card-icon icon="fa-flask" title="Laboratoire " url="#" text="Voir le laboratoire" /> 
         <x-card-icon icon="fa-x-ray" title="Radiologie " url="#" text="Voir le radiologie" /> 
         <x-card-icon icon="fa-cogs" title="Administration " url="/administration" text="Administration de l'application" /> 
     </div>
