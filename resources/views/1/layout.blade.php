@@ -121,40 +121,40 @@ $perms_ids = $perms->permissions->pluck('id');
                         <li class="nav_link_sub"><a href="#">Ajouter</a></li>
                     </ul> --}}
 
-                    <a href="/visites" class="nav_link  @if($pageSlug == "visites") activee @endif ">
+                    <a href="{{ url('/visites') }}" class="nav_link  @if($pageSlug == "visites") activee @endif ">
                         <i class='fa-solid fa-calendar-days nav_icon' data-bs-toggle="tooltip" data-bs-placement="right"
                         title="Visites"></i>
                         <span class="nav_name">Visites</span>
                     </a>
-                    <a href="/personnel" class="nav_link  @if($pageSlug == "personnel") activee @endif ">
+                    <a href="{{ url('/personnel') }}" class="nav_link  @if($pageSlug == "personnel") activee @endif ">
                         <i class='fa-solid fa-users nav_icon' data-bs-toggle="tooltip" data-bs-placement="right"
                         title="Personnel"></i>
                         <span class="nav_name">Personnel</span>
                     </a>
-                    <a href="/patients" class="nav_link  @if($pageSlug == "patients") activee @endif ">
+                    <a href="{{ url('/patients') }}" class="nav_link  @if($pageSlug == "patients") activee @endif ">
                         <i class='fa-solid fa-hospital-user nav_icon' data-bs-toggle="tooltip"
                         data-bs-placement="right" title="Patients"></i>
                         <span class="nav_name">Patients</span>
                     </a>
 
                     @if ($perms_groupes->contains('Pharmacie'))
-                        <a href="#" class="nav_link  @if($pageSlug == "pharmacie") activee @endif ">
+                        <a {{-- href="{{ url('/pharmacie') }}" --}} href="#" class="nav_link  @if($pageSlug == "pharmacie") activee @endif ">
                             <i class='fa-sharp fa-solid fa-prescription-bottle-medical nav_icon' data-bs-toggle="tooltip"
                             data-bs-placement="right" title="Pharmacie"></i>
                             <span class="nav_name">Pharmacie</span>
                         </a>
                     @endif
-                    <a href="#" class="nav_link   @if($pageSlug == "laboratoire") activee @endif ">
+                    <a {{-- href="{{ url('/laboratoire') }}" --}}  href="#" class="nav_link   @if($pageSlug == "laboratoire") activee @endif ">
                         <i class='fa-solid fa-flask nav_icon' data-bs-toggle="tooltip" data-bs-placement="right"
                         title="Laboratoire"></i>
                         <span class="nav_name">Laboratoire</span>
                     </a>
-                    <a href="#" class="nav_link   @if($pageSlug == "radiologie") activee @endif ">
+                    <a {{-- href="{{ url('/radiologie') }}"  --}}  href="#"  class="nav_link   @if($pageSlug == "radiologie") activee @endif ">
                         <i class='fa-solid fa-x-ray nav_icon' data-bs-toggle="tooltip" data-bs-placement="right"
                         title="Radiologie"></i>
                         <span class="nav_name">Radiologie</span>
                     </a>
-                    <a href="/administration" class="nav_link   @if($pageSlug == "admin") activee @endif ">
+                    <a href="{{ url('/administration') }}" class="nav_link   @if($pageSlug == "admin") activee @endif ">
                         <i class='fas fa-cogs nav_icon fa-2x' data-bs-toggle="tooltip" data-bs-placement="right"
                         title="Administration"></i>
                         <span class="nav_name">Administration</span>

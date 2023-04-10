@@ -8,7 +8,7 @@
             <h2 class="card-title">{{ $title }}</h2>
 
             <p class="cl-effect-1">
-                <a href="{{ $url }}">
+                <a href="{{ url($url) }}">
                    {{ $text }}
                 </a>
             </p>
