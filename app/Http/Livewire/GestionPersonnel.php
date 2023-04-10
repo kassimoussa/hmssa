@@ -18,8 +18,8 @@ class GestionPersonnel extends Component
 
     public $search = "";
     public $fonctions, $departements, $grades;
-    public $personnel, $user_id, $nom, $matricule, $sexe, $grade_id, $fonction_id, $departement_id,
-        $date_embauche, $date_naissance, $adresse, $telephone, $username, $email, $password, $filename, $filename2,  $filename3, $audj, $imgUrl, $url;
+    public $personnel, $user_id, $nom, $matricule, $sexe, $grade_id, $fonction_id, $departement_id, $date_embauche, $date_naissance, $adresse, $telephone, $username, $email, $password,
+    $nom2, $matricule2, $sexe2, $grade_id2, $fonction_id2, $departement_id2, $date_embauche2, $date_naissance2, $adresse2, $telephone2, $username2, $email2, $password2, $filename, $filename2,  $filename3, $audj, $imgUrl, $url;
     public $allPermissions, $groupes;
     public $permisions = [];
     public $selected_permisions = [];
@@ -72,7 +72,8 @@ class GestionPersonnel extends Component
     public function close_modal()
     {
         $this->reset([
-            'user_id', 'nom', 'matricule', 'sexe', 'grade_id', 'fonction_id', 'departement_id', 'date_embauche', 'date_naissance', 'adresse', 'telephone', 'email', 'username', 'password', 'filename', 'filename2', 'selected_permisions'
+            'user_id', 'nom', 'matricule', 'sexe', 'grade_id', 'fonction_id', 'departement_id', 'date_embauche', 'date_naissance', 'adresse', 'telephone', 'email', 'username', 'password', 
+            'nom2', 'matricule2', 'sexe2', 'grade_id2', 'fonction_id2', 'departement_id2', 'date_embauche2', 'date_naissance2', 'adresse2', 'telephone2', 'email2', 'username2', 'password2', 'filename', 'filename2', 'selected_permisions'
         ]);
         $this->url = "images/addphoto.png";
     }

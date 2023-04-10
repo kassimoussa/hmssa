@@ -53,7 +53,7 @@
                                             class="avatar border border-1 " id="avatar" height="150">
                                     </a>
                                     <input type="file" wire:model="filename" id="imginput" class="dimage"
-                                        style="display: none;" onchange="readURL(this);" accept="image/*">
+                                        style="display: none;" accept="image/*">
                                     <span class="text-danger">
                                         @error('photo')
                                         {{ $message }}
@@ -344,7 +344,7 @@
                                             class="avatar border border-1 " id="avatar" height="150">
                                     </a>
                                     <input type="file" wire:model="filename2" id="imginput2" class="dimage"
-                                        style="display: none;" onchange="readURL(this);" accept="image/*">
+                                        style="display: none;"  accept="image/*">
                                     <span class="text-danger">
                                         @error('photo')
                                         {{ $message }}
@@ -353,67 +353,67 @@
                                 </div>
 
                                 <div class="mt-2 col-12">
-                                    <label for="nom" class="form-label text-muted fw-italic mb-0">Nom *</label>
+                                    <label for="nom2" class="form-label text-muted fw-italic mb-0">Nom *</label>
                                     <div class="input-group">
                                         <span class="input-group-text txt fw-bold  text-white">
                                             <i class="fas fa-user icnbgc"></i>
                                         </span>
-                                        <input type="text" class="form-control" id="nom" wire:model.defer="nom"
+                                        <input type="text" class="form-control" id="nom2" wire:model.defer="nom2"
                                             placeholder="Nom de l'employé " required>
                                     </div>
                                     <span class="text-danger">
-                                        @error('nom')
+                                        @error('nom2')
                                         {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
 
                                 <div class="mt-2 col-12 ">
-                                    <label for="date_naissance" class="form-label text-muted fw-italic mb-0">Date de
+                                    <label for="date_naissance2" class="form-label text-muted fw-italic mb-0">Date de
                                         naissance
                                         *</label>
                                     <div class="input-group">
                                         <span class="input-group-text txt fw-bold  text-white">
                                             <i class="fa-solid fa-calendar-days icnbgc"></i>
                                         </span>
-                                        <input type="date" class="form-control " id="date_naissance"
-                                            wire:model="date_naissance" required>
+                                        <input type="date" class="form-control " id="date_naissance2"
+                                            wire:model="date_naissance2" required>
                                     </div>
                                     <span class="text-danger">
-                                        @error('date_naissance')
+                                        @error('date_naissance2')
                                         {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
 
                                 <div class="mt-2 col-12">
-                                    <label for="adresse" class="form-label text-muted fw-italic mb-0">Adresse *</label>
+                                    <label for="adresse2" class="form-label text-muted fw-italic mb-0">Adresse *</label>
                                     <div class="input-group">
                                         <span class="input-group-text txt fw-bold  text-white">
                                             <i class="fa-solid fa-location-dot icnbgc"></i>
                                         </span>
-                                        <input type="text" class="form-control" id="adresse" wire:model.defer="adresse"
+                                        <input type="text" class="form-control" id="adresse2" wire:model.defer="adresse2"
                                             placeholder="Adresse de l'employé" required>
                                     </div>
                                     <span class="text-danger">
-                                        @error('adresse')
+                                        @error('adresse2')
                                         {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
 
                                 <div class="mt-2 col-12 ">
-                                    <label for="telephone" class="form-label text-muted fw-italic mb-0">Telephone
+                                    <label for="telephone2" class="form-label text-muted fw-italic mb-0">Telephone
                                         *</label>
                                     <div class="input-group">
                                         <span class="input-group-text txt fw-bold  text-white">
                                             <i class="fa-solid fa-phone icnbgc"></i>
                                         </span>
                                         <input type="text" class="form-control" id="telephone"
-                                            wire:model.defer="telephone" placeholder="ex: 77123456 " required>
+                                            wire:model.defer="telephone2" placeholder="ex: 77123456 " required>
                                     </div>
                                     <span class="text-danger">
-                                        @error('telephone')
+                                        @error('telephone2')
                                         {{ $message }}
                                         @enderror
                                     </span>
@@ -421,16 +421,16 @@
 
 
                                 <div class="mt-2 col-12 ">
-                                    <label for="email" class="form-label text-muted fw-italic mb-0">Email *</label>
+                                    <label for="email2" class="form-label text-muted fw-italic mb-0">Email *</label>
                                     <div class="input-group">
                                         <span class="input-group-text txt fw-bold  text-white">
                                             <i class="fa-solid fa-at icnbgc"></i>
                                         </span>
-                                        <input type="email" class="form-control" id="email" wire:model.defer="email"
+                                        <input type="email" class="form-control" id="email2" wire:model.defer="email2"
                                             placeholder="L'email de l'employé" required>
                                     </div>
                                     <span class="text-danger">
-                                        @error('email')
+                                        @error('email2')
                                         {{ $message }}
                                         @enderror
                                     </span>
@@ -443,17 +443,17 @@
                             <div class="col-md-6 row ">
 
                                 <div class="mt-2 col-6 ">
-                                    <label for="matricule" class="form-label text-muted fw-italic mb-0">Matricule
+                                    <label for="matricule2" class="form-label text-muted fw-italic mb-0">Matricule
                                         *</label>
                                     <div class="input-group">
                                         <span class="input-group-text txt fw-bold  text-white">
                                             <i class="fa-solid fa-minus icnbgc"></i>
                                         </span>
-                                        <input type="text" class="form-control" id="matricule"
-                                            wire:model.defer="matricule" placeholder="ex: 25/5d54" required>
+                                        <input type="text" class="form-control" id="matricule2"
+                                            wire:model.defer="matricule2" placeholder="ex: 25/5d54" required>
                                     </div>
                                     <span class="text-danger">
-                                        @error('matricule')
+                                        @error('matricule2')
                                         {{ $message }}
                                         @enderror
                                     </span>
@@ -461,31 +461,31 @@
 
 
                                 <div class="mt-2 col-6 ">
-                                    <label for="sexe" class="form-label text-muted fw-italic mb-0">Sexe *</label>
+                                    <label for="sexe2" class="form-label text-muted fw-italic mb-0">Sexe *</label>
                                     <div class="input-group mb-3 ">
                                         <span class="input-group-text txt fw-bold  text-white">
                                             <i class="fas fa-venus-mars icnbgc"></i>
                                         </span>
-                                        <select wire:model.defer="sexe" class="form-select" id="sexe">
+                                        <select wire:model.defer="sexe2" class="form-select" id="sexe2">
                                             <option value="" selected>Select</option>
                                             <option value="Homme">Homme</option>
                                             <option value="Femme">Femme</option>
                                         </select>
                                     </div>
                                     <span class="text-danger">
-                                        @error('sexe')
+                                        @error('sexe2')
                                         {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
 
                                 <div class="mt-2 col-12 ">
-                                    <label for="grade" class="form-label text-muted fw-italic mb-0">Grade *</label>
+                                    <label for="grade_id2" class="form-label text-muted fw-italic mb-0">Grade *</label>
                                     <div class="input-group">
                                         <span class="input-group-text txt fw-bold  text-white">
                                             <i class="fa-solid fa-star icnbgc"></i>
                                         </span>
-                                        <select wire:model.defer="grade_id" class="form-select" id="grade">
+                                        <select wire:model.defer="grade_id2" class="form-select" id="grade_id2">
                                             <option value="" selected>Select</option>
                                             @foreach ($grades as $choi)
                                             <option value="{{ $choi->id }}">{{ $choi->nom }} </option>
@@ -493,20 +493,20 @@
                                         </select>
                                     </div>
                                     <span class="text-danger">
-                                        @error('grade')
+                                        @error('grade_id2')
                                         {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
 
                                 <div class="mt-2 col-12 ">
-                                    <label for="fonction" class="form-label text-muted fw-italic mb-0">Fonction
+                                    <label for="fonction_id2" class="form-label text-muted fw-italic mb-0">Fonction
                                         *</label>
                                     <div class="input-group">
                                         <span class="input-group-text txt fw-bold  text-white">
                                             <i class="fa-solid fa-cog icnbgc"></i>
                                         </span>
-                                        <select wire:model.defer="fonction_id" class="form-select" id="fonction">
+                                        <select wire:model.defer="fonction_id2" class="form-select" id="fonction_id2">
                                             <option value="" selected>Select</option>
                                             @foreach ($fonctions as $choi)
                                             <option value="{{ $choi->id }}">{{ $choi->nom }} </option>
@@ -514,20 +514,20 @@
                                         </select>
                                     </div>
                                     <span class="text-danger">
-                                        @error('fonction')
+                                        @error('fonction_id2')
                                         {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
 
                                 <div class="mt-2 col-12 ">
-                                    <label for="departement" class="form-label text-muted fw-italic mb-0">Departement
+                                    <label for="departement_id2" class="form-label text-muted fw-italic mb-0">Departement
                                         *</label>
                                     <div class="input-group">
                                         <span class="input-group-text txt fw-bold  text-white">
                                             <i class="fa-solid fa-building icnbgc"></i>
                                         </span>
-                                        <select wire:model.defer="departement_id" class="form-select" id="departement">
+                                        <select wire:model.defer="departement_id2" class="form-select" id="departement_id2">
                                             <option value="" selected>Select</option>
                                             @foreach ($departements as $choi)
                                             <option value="{{ $choi->id }}">{{ $choi->nom }} </option>
@@ -535,58 +535,58 @@
                                         </select>
                                     </div>
                                     <span class="text-danger">
-                                        @error('departement')
+                                        @error('departement_id2')
                                         {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
 
                                 <div class="mt-2 col-12 ">
-                                    <label for="date_embauche" class="form-label text-muted fw-italic mb-0">Date
+                                    <label for="date_embauche2" class="form-label text-muted fw-italic mb-0">Date
                                         d'embauche
                                         *</label>
                                     <div class="input-group">
                                         <span class="input-group-text txt fw-bold  text-white">
                                             <i class="fa-solid fa-calendar-days icnbgc"></i>
                                         </span>
-                                        <input type="date" class="form-control " id="date_embauche"
-                                            wire:model.defer="date_embauche" required>
+                                        <input type="date" class="form-control " id="date_embauche2"
+                                            wire:model.defer="date_embauche2" required>
                                     </div>
                                     <span class="text-danger">
-                                        @error('date_embauche')
+                                        @error('date_embauche2')
                                         {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
 
                                 <div class="mt-2 col-12 ">
-                                    <label for="username" class="form-label text-muted fw-italic mb-0">Pseudo *</label>
+                                    <label for="username2" class="form-label text-muted fw-italic mb-0">Pseudo *</label>
                                     <div class="input-group">
                                         <span class="input-group-text txt fw-bold  text-white">
                                             <i class="fa-solid fa-font icnbgc"></i>
                                         </span>
-                                        <input type="text" class="form-control" id="username"
-                                            wire:model.defer="username" placeholder="Le nom d'utilisateur" required>
+                                        <input type="text" class="form-control" id="username2"
+                                            wire:model.defer="username2" placeholder="Le nom d'utilisateur" required>
                                     </div>
                                     <span class="text-danger">
-                                        @error('username')
+                                        @error('username2')
                                         {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
 
                                 <div class="mt-2 col-12 ">
-                                    <label for="password" class="form-label text-muted fw-italic mb-0">Password
+                                    <label for="password2" class="form-label text-muted fw-italic mb-0">Password
                                         *</label>
                                     <div class="input-group">
                                         <span class="input-group-text txt fw-bold  text-white">
                                             <i class="fa-solid fa-lock  icnbgc"></i>
                                         </span>
-                                        <input type="password" class="form-control" id="password"
-                                            wire:model.defer="password" placeholder="Le mot de passe" required>
+                                        <input type="password" class="form-control" id="password2"
+                                            wire:model.defer="password2" placeholder="Le mot de passe" required>
                                     </div>
                                     <span class="text-danger">
-                                        @error('password')
+                                        @error('password2')
                                         {{ $message }}
                                         @enderror
                                     </span>
