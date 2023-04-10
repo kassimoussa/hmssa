@@ -306,7 +306,7 @@ use Carbon\Carbon;
 
 
             calendar.addEventSource({
-                url: '/visites/events', 
+                url: 'visites/events', 
             });
 
             calendar.render();
