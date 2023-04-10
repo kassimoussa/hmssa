@@ -102,7 +102,7 @@ $perms_ids = $perms->permissions->pluck('id');
         <div class="l-navbar" id="nav-bar">
             <nav class="nav nav_">
                 <div class="nav_list">
-                    <a href="/" class="nav_link mb-3 mt- @if($pageSlug == "index") activee @endif ">
+                    <a href="{{ url('/') }}" class="nav_link mb-3 mt- @if($pageSlug == "index") activee @endif ">
                         <i class='fa-solid fa-hospital nav_icon ' data-bs-toggle=" tooltip"
                         data-bs-placement="right" title="Accueil"></i>
                         <span class="nav_name">Accueil</span>
