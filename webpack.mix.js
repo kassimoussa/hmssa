@@ -19,3 +19,9 @@ mix.js('resources/js/app.js', 'public/js')
         'public/webfonts'
     );
 
+mix.options({
+    hmrOptions:{
+        host: 'localhost',
+        port: 8080,
+    }
+});    

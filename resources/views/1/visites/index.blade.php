@@ -43,14 +43,14 @@
         <h3 class="over-title ">Gestion de visites </h3>
     </div>
 
-    <div class="d-flex justify-content-end mb-3 ">
+    {{-- <div class="d-flex justify-content-end mb-3 ">
         <div class="">
-            <a class="btn btn-primary bg-cp square border-0 fw-bold" data-bs-toggle="modal" data-bs-target="#newpatient"
+            <a class="btn btn-primary bg-cp square border-0 fw-bold" data-bs-toggle="modal" data-bs-target="#newvisite"
                 title="Ajouter un patient">
                 <i class="fa-solid fa-user-plus"></i> Ajouter
             </a>
         </div>
-    </div>
+    </div> --}}
 
 
 

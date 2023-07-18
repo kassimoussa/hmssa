@@ -15,7 +15,7 @@
         html,
         body {
             height: 100%;
-            background-image: url('/images/bg_ssa.jpg');
+            background-image: url('../images/bg_ssa.jpg');
             background-repeat: no-repeat;
             background-size: cover;
         }

@@ -12,6 +12,8 @@ class Event extends Model
     protected $fillable = [
         'user_id',
         'patient_id',
+        'visite_id',
+        'consultation_id',
         'date', 
         'title', 
         'start', 

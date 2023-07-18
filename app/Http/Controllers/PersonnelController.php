@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 class PersonnelController extends Controller
 {
     public function index( ) {
-
-        return view("1.personnels.index");
+        $level = session('level');
+        return view($level.'.personnels.index');
     }
 
     public function create(){
-
-        return view("1.personnels.create");
+        $level = session('level');
+        return view($level.'.personnels.create');
     }
 }

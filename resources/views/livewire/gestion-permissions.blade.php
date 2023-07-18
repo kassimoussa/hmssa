@@ -146,7 +146,7 @@
 
     <div class="col ">
 
-        <table class="table table-bordered border-dark table-striped table-hover table-sm align-middle " id="">
+        <table class="table table-bordered border-dark table-striped table-hover table-sm align-middle " id="" wire:poll>
             <thead class="bg-dark text-white text-center">
                 <th scope="col">#</th>
                 <th scope="col">Groupe</th>

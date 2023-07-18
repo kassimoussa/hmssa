@@ -15,16 +15,18 @@ return new class extends Migration
     {
         Schema::create('consultations', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->nullable();
             $table->bigInteger('patient_id')->nullable();
+            $table->bigInteger('infirmier_id')->nullable();
+            $table->bigInteger('medecin_id')->nullable();
             $table->timestamp('date')->nullable();
-            $table->text('antecedents')->nullable();
-            $table->text('symptomes')->nullable();
-            $table->string('tension_arterielle')->nullable();
-            $table->string('temperature_corporelle')->nullable();
+            $table->text('motif')->nullable();
+            $table->string('tension')->nullable();
+            $table->string('temperature')->nullable();
+            $table->string('spo2')->nullable();
             $table->string('glycemie')->nullable();
             $table->string('poids')->nullable();
             $table->string('taille')->nullable();
+            $table->text('observations')->nullable();
             $table->timestamps();
         });
     }

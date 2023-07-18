@@ -12,16 +12,18 @@ class Visite extends Model
     protected $fillable = [
         'user_id',
         'patient_id',
+        'consultation_id',
         'date', 
+        'title', 
+        'start', 
+        'end', 
+        'status',
+        'color'
     ];
 
     public function patient() {
         return $this->belongsTo(Patient::class, 'patient_id');
     }
 
-    
-    public function event() {
-        return $this->belongsTo(Event::class, 'event_id');
-    }
 
 }

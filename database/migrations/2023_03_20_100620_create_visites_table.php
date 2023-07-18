@@ -17,8 +17,13 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id')->nullable();
             $table->bigInteger('patient_id')->nullable();
-            $table->bigInteger('event_id')->nullable();
+            $table->bigInteger('consultation_id')->nullable();
             $table->timestamp('date')->nullable();
+            $table->string('title')->nullable();
+            $table->timestamp('start')->nullable();
+            $table->timestamp('end')->nullable();
+            $table->string('color')->default('#3788d8');
+            $table->string('status')->default('NON');
             $table->timestamps();
         });
     }

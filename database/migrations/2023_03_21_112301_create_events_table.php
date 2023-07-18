@@ -18,6 +18,7 @@ return new class extends Migration
             $table->bigInteger('user_id')->nullable();
             $table->bigInteger('patient_id')->nullable();
             $table->bigInteger('visite_id')->nullable();
+            $table->bigInteger('consultation_id')->nullable();
             $table->timestamp('date')->nullable();
             $table->string('title')->nullable();
             $table->timestamp('start')->nullable();

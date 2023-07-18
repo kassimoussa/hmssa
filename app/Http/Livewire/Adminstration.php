@@ -12,6 +12,7 @@ class Adminstration extends Component
     {
         $this->sbtn = $i;
     }
+    
     public function render()
     {
         return view('livewire.adminstration');

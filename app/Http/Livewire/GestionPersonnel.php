@@ -9,6 +9,7 @@ use App\Models\Permissions;
 use App\Models\User;
 use Livewire\Component;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
 
@@ -19,10 +20,14 @@ class GestionPersonnel extends Component
     public $search = "";
     public $fonctions, $departements, $grades;
     public $personnel, $user_id, $nom, $matricule, $sexe, $grade_id, $fonction_id, $departement_id, $date_embauche, $date_naissance, $adresse, $telephone, $username, $email, $password,
-    $nom2, $matricule2, $sexe2, $grade_id2, $fonction_id2, $departement_id2, $date_embauche2, $date_naissance2, $adresse2, $telephone2, $username2, $email2, $password2, $filename, $filename2,  $filename3, $audj, $imgUrl, $url;
+        $nom2, $matricule2, $sexe2, $grade_id2, $fonction_id2, $departement_id2, $date_embauche2, $date_naissance2, $adresse2, $telephone2, $username2, $email2, $password2, $filename, $filename2,  $filename3, $audj, $imgUrl, $url;
     public $allPermissions, $groupes;
     public $permisions = [];
     public $selected_permisions = [];
+    public $selected_grade = [];
+    public $selected_fonction = [];
+    public $selected_departement = [];
+    public $all_grade, $all_fonction, $all_departement;
 
 
 
@@ -35,9 +40,19 @@ class GestionPersonnel extends Component
         $this->departements = Departement::all();
         $this->grades = Grade::orderBy('id', 'asc')->get();
         $this->allPermissions = Permissions::orderBy('id', 'asc')->get();
-        $this->groupes = Permissions::distinct()->pluck('groupe');;
+        $this->groupes = Permissions::distinct()->pluck('groupe');
     }
 
+    /*  public function updatedGrades()
+    {
+        if (!is_array($this->grades)) return;
+        $this->grades = array_filter(
+            $this->grades,
+            function ($grade) {
+                return $grade != false;
+            }
+        );
+    } */
     protected $rules = [
         'matricule' => 'required|unique:users',
         'email' => 'required|unique:users',
@@ -50,29 +65,58 @@ class GestionPersonnel extends Component
 
     public function getPersonnel()
     {
-        $search = $this->search ;
-        $this->personnel = User::Where(function ($query) use ($search) {
+        $search = $this->search;
+        /* $this->personnel = User::Where(function ($query) use ($search) {
             $query->where('matricule', 'Like', '%' . $search . '%')
                 ->orWhere('email', 'Like', '%' . $search . '%')
                 ->orWhere('nom', 'Like', '%' . $search . '%')
                 ->orWhere('telephone', 'Like', '%' . $search . '%');
-        })->with('fonction')->with('departement')->with('grade')
-            ->orderBy("matricule", "asc")
-            ->get();
-        //$this->personnel = User::all();
+        })
+        ->orWhereHas('fonction', function (Builder $query) use ($search) {
+            $query->where('nom', 'Like', '%' . $search . '%')  ;
+        })
+        ->orWhereHas('departement', function (Builder $query) use ($search) {
+            $query->where('nom', 'Like', '%' . $search . '%')  ;
+        })
+        ->orWhereHas('grade', function (Builder $query) use ($search) {
+            $query->where('nom', 'Like', '%' . $search . '%')  ;
+        })
+        ->orderBy("matricule", "asc")
+        ->get(); */
+
+        $this->personnel = User::whereLike(['matricule', 'email', 'nom', 'telephone', 'fonction.nom', 'departement.nom', 'grade.nom'], $this->search ?? '')
+            ->when($this->selected_grade, function ($query, $selected_grade) {
+                return $query->whereIn('grade_id', $selected_grade);
+            })
+            ->when($this->selected_fonction, function ($query, $selected_fonction) {
+                return $query->whereIn('fonction_id', $selected_fonction);
+            })
+            ->when($this->selected_departement, function ($query, $selected_departement) {
+                return $query->whereIn('departement_id', $selected_departement);
+            })
+            ->orderBy("matricule", "asc")->get();
+
+        /* $this->personnel = User::when($this->selected_grade, function ($query, $selected_grade) {
+                return $query->whereIn('grade_id', $selected_grade);
+            })
+            ->orderBy("matricule", "asc")->get(); */
+        //dump($this->selected_grade);
     }
 
-    public function getPermissions($user_id){
+
+
+    public function getPermissions($user_id)
+    {
         $this->user_id = $user_id;
         $user = User::with("permissions")->find($user_id);
         $this->selected_permisions = $user->permissions->pluck('id');
         /* return dd($this->groupes); */
     }
-    
+
     public function close_modal()
     {
         $this->reset([
-            'user_id', 'nom', 'matricule', 'sexe', 'grade_id', 'fonction_id', 'departement_id', 'date_embauche', 'date_naissance', 'adresse', 'telephone', 'email', 'username', 'password', 
+            'user_id', 'nom', 'matricule', 'sexe', 'grade_id', 'fonction_id', 'departement_id', 'date_embauche', 'date_naissance', 'adresse', 'telephone', 'email', 'username', 'password',
             'nom2', 'matricule2', 'sexe2', 'grade_id2', 'fonction_id2', 'departement_id2', 'date_embauche2', 'date_naissance2', 'adresse2', 'telephone2', 'email2', 'username2', 'password2', 'filename', 'filename2', 'selected_permisions'
         ]);
         $this->url = "images/addphoto.png";
@@ -80,6 +124,8 @@ class GestionPersonnel extends Component
 
     public function store()
     {
+        $this->validate();
+
         $user = new User();
         $user->nom = $this->nom;
         $user->matricule = $this->matricule;
@@ -184,13 +230,13 @@ class GestionPersonnel extends Component
         }
     }
 
-    
+
     public function attach()
-    {  
-         $user = User::with("permissions")->find( $this->user_id);
-         $query = $user->permissions()->sync($this->selected_permisions);
-        
-         if ($query) {
+    {
+        $user = User::with("permissions")->find($this->user_id);
+        $query = $user->permissions()->sync($this->selected_permisions);
+
+        if ($query) {
             $this->close_modal();
             $this->getPersonnel();
             $this->dispatchBrowserEvent(

@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\Events\FullCalendarRefetchEvent;
+use App\Events\VisiteEvent;
 use App\Models\Event;
 use App\Models\Patient;
 use App\Models\Visite;
@@ -11,8 +13,8 @@ use Livewire\Component;
 class GestionVisite extends Component
 {
     public $search = "";
-    public $events;
-    public $visites, $patients, $patient_id, $event_id, $visite_id, $nom, $nom2, $jour, $mois, $annee, $user_id, $audj, $title;
+    public $visites, $patients, $patient_id, $visite_id, $consultation_id, $nom, $nom2, $jour, $mois, $annee, $user_id, $audj, $title, $status;
+    public $nom_patient, $sexe, $adresse, $matricule, $affiliation, $telephone, $lieu_naissance, $date_naissance, $gp_sanguin ;
 
     public function mount()
     {
@@ -38,11 +40,7 @@ class GestionVisite extends Component
 
         $this->visites = Visite::with('patient')->orderBy("date", "asc")->get();
     }
-    
-    public function getEvents()
-    {
-        $this->events = Event::all();
-    }
+
 
     public function getPatients()
     {
@@ -67,23 +65,31 @@ class GestionVisite extends Component
         $this->title = $patient->nom;
     }
 
-    public function loadids($patient_id, $event_id, $visite_id)
-    {
-        $this->patient_id = $patient_id;
-        $this->event_id = $event_id;
-        $this->visite_id = $visite_id; 
-
-       // return dump("pid: " . $this->patient_id ." | " . "eid: " . $this->event_id ." | " . "pid: " . $this->visite_id ." ");
+    public function loadids($patient_id, $visite_id, $status)
+    {   
+        $visite = Visite::find($visite_id); 
+        $this->patient_id = $patient_id; 
+        $this->visite_id = $visite_id;
+        $this->status = $status; 
+        $this->consultation_id = $visite->consultation_id; 
+        $this->dispatchBrowserEvent('eventAction');
+        //dump($status);
+        // return dump("pid: " . $this->patient_id ." | " . "eid: " . $this->event_id ." | " . "pid: " . $this->visite_id ." ");
     }
 
     public function close_modal()
     {
         $this->emit("refreshCalendar");
-        $this->dispatchBrowserEvent('close-modal'); 
+        $this->dispatchBrowserEvent('close-modal');
         $this->reset([
-            'nom', 'patient_id', 'search'
+            'nom', 'patient_id', 'search', 'status','consultation_id', 'nom_patient', 'sexe', 'adresse', 'matricule', 
+            'affiliation', 'telephone', 'lieu_naissance', 'date_naissance', 'gp_sanguin'
         ]);
-
+    }
+ 
+    public function refreshCal()
+    {
+        $this->emit("refreshCalendar");
     }
 
     public function store()
@@ -92,53 +98,84 @@ class GestionVisite extends Component
         $visite->user_id = $this->user_id;
         $visite->patient_id = $this->patient_id;
         $visite->date = Carbon::now();
+        $visite->start = Carbon::now();
+        $visite->end = Carbon::now();
+        $visite->title = $this->title; 
         $query = $visite->save();
 
-        $event = new Event();
-        $event->user_id = $this->user_id;
-        $event->patient_id = $this->patient_id;
-        $event->date = Carbon::now();
-        $event->start = Carbon::now();
-        $event->end = Carbon::now();
-        $event->title = $this->title;
-        $event->visite_id = $visite->id;
-    
 
-        if ($query) {
-            $event->save();
+        if ($query) { 
             $this->close_modal();
             $this->getVisites();
             $this->dispatchBrowserEvent(
                 'alert',
                 ['type' => 'success',  'message' => 'Ajout réussi!']
-            ); 
+            );
         } else {
             $this->dispatchBrowserEvent(
                 'alert',
                 ['type' => 'error',  'message' => "Erreur lors de l'ajout!"]
-            ); 
+            );
+        }
+    }
+
+    
+
+    public function storePatient()
+    {
+        $patient = new Patient();
+        $patient->nom = $this->nom_patient;
+        $patient->matricule = $this->matricule;
+        $patient->sexe = $this->sexe;
+        $patient->gp_sanguin = $this->gp_sanguin;
+        $patient->adresse = $this->adresse;
+        $patient->affiliation = $this->affiliation;
+        $patient->telephone = $this->telephone;
+        $patient->lieu_naissance = $this->lieu_naissance;
+        $patient->date_naissance = $this->date_naissance;
+        $patient->user_id = $this->user_id; 
+        $query = $patient->save();
+
+        if ($query) {
+            $this->close_modal();
+            $this->getPatients();
+            $this->dispatchBrowserEvent(
+                'alert',
+                ['type' => 'success',  'message' => 'Ajout réussi!']
+            );
+            $this->dispatchBrowserEvent('close-modal');
+        } else {
+            $this->dispatchBrowserEvent(
+                'alert',
+                ['type' => 'error',  'message' => "Erreur lors de l'ajout!"]
+            );
+            $this->dispatchBrowserEvent('close-modal');
         }
     }
 
     public function show_patient()
     {
-        return redirect("/patients/show/". $this->patient_id);
-    } 
-    
+        return redirect("/patients/show/" . $this->patient_id);
+    }
+
     public function show_visite()
     {
-        return redirect("/visites/show/". $this->visite_id);
+        return redirect("/visites/show/" . $this->visite_id);
     }
+
+    public function show_consultation()
+    { 
+        return redirect("/visites/consultation/" . $this->consultation_id);
+    }
+
 
 
     public function delete()
     {
         $visite = Visite::find($this->visite_id); 
-        $event = Event::find($this->event_id); 
- 
-        $visite->delete();
-        $event->delete();
-        
+
+        $visite->delete(); 
+
         $this->close_modal();
 
         $this->dispatchBrowserEvent(
@@ -147,13 +184,10 @@ class GestionVisite extends Component
         );
     }
 
-    
-
     public function render()
     {
         $this->getVisites();
-        $this->getPatients();
-        $this->getEvents();
+        $this->getPatients(); 
         return view('livewire.gestion-visite');
     }
 }

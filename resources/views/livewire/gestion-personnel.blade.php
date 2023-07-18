@@ -1,14 +1,83 @@
 <div class="py-3 ">
     <x-loading-indicator />
 
+    <style>
+        .dropdown-menu {
+            width: 500px;
+        }
+    </style>
+
     <div class="d-flex justify-content-between mb-3 ">
-        <div class="col-6">
-            <div class="input-group">
-                <span class="btn btn-dark square">Rechercher</span>
-                <input type="search" class="form-control square" wire:model="search"
-                    placeholder="Rechercher un personnel" value="{{ $search }}">
+        <div class="col-10 d-flex justify-content-start">
+
+            <div class="col-4">
+                <div class="input-group">
+                    <span class="btn btn-dark square">Rechercher</span>
+                    <input type="search" class="form-control square" wire:model="search"
+                        placeholder="Rechercher un personnel" value="{{ $search }}">
+                </div>
             </div>
+
+            <div class="btn-group px-2 ">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside" aria-expanded="false">
+                    <span class="fw-bold px-2 ">Grade </span>
+                </button>
+                <ul class="dropdown-menu">
+                    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3  row-cols-lg-3">
+                        @foreach ($grades as $choi)
+                            <li class="col" ><div class="dropdown-item "  >
+                                    <input type="checkbox" class="form-check-input pe-1" wire:model="selected_grade"
+                                        id="{{ $choi->nom . $choi->id }}" value="{{ $choi->id }}">
+                                    <label class="form-check-label" for="{{ $choi->nom . $choi->id }}">
+                                        {{ $choi->nom }} </label>
+                                </div></li>
+                        @endforeach
+                    </div>
+                </ul>
+            </div>
+
+            <div class="btn-group px-2 ">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside" aria-expanded="false">
+                    <span class="fw-bold px-2 ">Fonction </span>
+                </button>
+                <ul class="dropdown-menu">
+                    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3  row-cols-lg-3">
+                        @foreach ($fonctions as $choi)
+                            <li class="col" ><div class="dropdown-item "  >
+                                    <input type="checkbox" class="form-check-input pe-1" wire:model="selected_fonction"
+                                        id="{{ $choi->nom . $choi->id }}" value="{{ $choi->id }}">
+                                    <label class="form-check-label" for="{{ $choi->nom . $choi->id }}">
+                                        {{ $choi->nom }} </label>
+                                </div></li>
+                        @endforeach
+                    </div>
+                </ul>
+            </div>
+
+            <div class="btn-group px-2 ">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside" aria-expanded="false">
+                    <span class="fw-bold px-2 ">Departement </span>
+                </button>
+                <ul class="dropdown-menu">
+                    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3  row-cols-lg-3">
+                        @foreach ($departements as $choi)
+                            <li class="col" ><div class="dropdown-item "  >
+                                    <input type="checkbox" class="form-check-input pe-1" wire:model="selected_departement"
+                                        id="{{ $choi->nom . $choi->id }}" value="{{ $choi->id }}">
+                                    <label class="form-check-label" for="{{ $choi->nom . $choi->id }}">
+                                        {{ $choi->nom }} </label>
+                                </div></li>
+                        @endforeach
+                    </div>
+                </ul>
+            </div>
+
         </div>
+
+
         <div class="">
             <a class="btn btn-primary bg-cp square border-0 fw-bold" data-bs-toggle="modal"
                 data-bs-target="#newpersonnel">
@@ -33,8 +102,8 @@
                                 <div class="">
                                     <button type="submit" name="submit"
                                         class="btn btn-success square border-0  fw-bold">Enregistrer</button>
-                                    <button type="reset" wire.click="close_modal" class="btn btn-danger square fw-bold"
-                                        data-bs-dismiss="modal">Annuler</button>
+                                    <button type="reset" wire.click="close_modal"
+                                        class="btn btn-danger square fw-bold" data-bs-dismiss="modal">Annuler</button>
                                 </div>
                             </div>
                         </div>
@@ -46,17 +115,19 @@
 
                                 <div class=" mt-2 d-flex justify-content-center align-items-center position-relative">
                                     <x-loading-indicator2 />
-                                    <a id="imgupload" class="" onclick="$('#imginput').trigger('click'); return false;"
-                                        role="button" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                    <a id="imgupload" class=""
+                                        onclick="$('#imginput').trigger('click'); return false;" role="button"
+                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
                                         title="Clicker pour ajouter la photo du personnel ">
-                                        <img alt="Photo du personnel" hover="Photo du personnel" src="{{ asset($url) }}"
-                                            class="avatar border border-1 " id="avatar" height="150">
+                                        <img alt="Photo du personnel" hover="Photo du personnel"
+                                            src="{{ asset($url) }}" class="avatar border border-1 " id="avatar"
+                                            height="150">
                                     </a>
                                     <input type="file" wire:model="filename" id="imginput" class="dimage"
                                         style="display: none;" accept="image/*">
                                     <span class="text-danger">
                                         @error('photo')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
@@ -67,12 +138,12 @@
                                         <span class="input-group-text txt fw-bold  text-white">
                                             <i class="fas fa-user icnbgc"></i>
                                         </span>
-                                        <input type="text" class="form-control" id="nom" wire:model.defer="nom"
-                                            placeholder="Nom de l'employé " required>
+                                        <input type="text" class="form-control" id="nom"
+                                            wire:model.defer="nom" placeholder="Nom de l'employé " required>
                                     </div>
                                     <span class="text-danger">
                                         @error('nom')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
@@ -90,23 +161,24 @@
                                     </div>
                                     <span class="text-danger">
                                         @error('date_naissance')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
 
                                 <div class="mt-2 col-12">
-                                    <label for="adresse" class="form-label text-muted fw-italic mb-0">Adresse *</label>
+                                    <label for="adresse" class="form-label text-muted fw-italic mb-0">Adresse
+                                        *</label>
                                     <div class="input-group">
                                         <span class="input-group-text txt fw-bold  text-white">
                                             <i class="fa-solid fa-location-dot icnbgc"></i>
                                         </span>
-                                        <input type="text" class="form-control" id="adresse" wire:model.defer="adresse"
-                                            placeholder="Adresse de l'employé" required>
+                                        <input type="text" class="form-control" id="adresse"
+                                            wire:model.defer="adresse" placeholder="Adresse de l'employé" required>
                                     </div>
                                     <span class="text-danger">
                                         @error('adresse')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
@@ -123,7 +195,7 @@
                                     </div>
                                     <span class="text-danger">
                                         @error('telephone')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
@@ -135,12 +207,12 @@
                                         <span class="input-group-text txt fw-bold  text-white">
                                             <i class="fa-solid fa-at icnbgc"></i>
                                         </span>
-                                        <input type="email" class="form-control" id="email" wire:model.defer="email"
-                                            placeholder="L'email de l'employé" required>
+                                        <input type="email" class="form-control" id="email"
+                                            wire:model.defer="email" placeholder="L'email de l'employé" required>
                                     </div>
                                     <span class="text-danger">
                                         @error('email')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
@@ -163,7 +235,7 @@
                                     </div>
                                     <span class="text-danger">
                                         @error('matricule')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
@@ -183,7 +255,7 @@
                                     </div>
                                     <span class="text-danger">
                                         @error('sexe')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
@@ -197,13 +269,13 @@
                                         <select wire:model.defer="grade_id" class="form-select" id="grade">
                                             <option value="" selected>Select</option>
                                             @foreach ($grades as $choi)
-                                            <option value="{{ $choi->id }}">{{ $choi->nom }} </option>
+                                                <option value="{{ $choi->id }}">{{ $choi->nom }} </option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <span class="text-danger">
                                         @error('grade')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
@@ -218,13 +290,13 @@
                                         <select wire:model.defer="fonction_id" class="form-select" id="fonction">
                                             <option value="" selected>Select</option>
                                             @foreach ($fonctions as $choi)
-                                            <option value="{{ $choi->id }}">{{ $choi->nom }} </option>
+                                                <option value="{{ $choi->id }}">{{ $choi->nom }} </option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <span class="text-danger">
                                         @error('fonction')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
@@ -236,16 +308,17 @@
                                         <span class="input-group-text txt fw-bold  text-white">
                                             <i class="fa-solid fa-building icnbgc"></i>
                                         </span>
-                                        <select wire:model.defer="departement_id" class="form-select" id="departement">
+                                        <select wire:model.defer="departement_id" class="form-select"
+                                            id="departement">
                                             <option value="" selected>Select</option>
                                             @foreach ($departements as $choi)
-                                            <option value="{{ $choi->id }}">{{ $choi->nom }} </option>
+                                                <option value="{{ $choi->id }}">{{ $choi->nom }} </option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <span class="text-danger">
                                         @error('departement')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
@@ -263,13 +336,14 @@
                                     </div>
                                     <span class="text-danger">
                                         @error('date_embauche')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
 
                                 <div class="mt-2 col-12 ">
-                                    <label for="username" class="form-label text-muted fw-italic mb-0">Pseudo *</label>
+                                    <label for="username" class="form-label text-muted fw-italic mb-0">Pseudo
+                                        *</label>
                                     <div class="input-group">
                                         <span class="input-group-text txt fw-bold  text-white">
                                             <i class="fa-solid fa-font icnbgc"></i>
@@ -279,7 +353,7 @@
                                     </div>
                                     <span class="text-danger">
                                         @error('username')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
@@ -296,7 +370,7 @@
                                     </div>
                                     <span class="text-danger">
                                         @error('password')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
@@ -324,8 +398,8 @@
                                 <div class="">
                                     <button type="submit" name="submit"
                                         class="btn btn-success square border-0  fw-bold">Enregistrer</button>
-                                    <button type="reset" wire.click="close_modal" class="btn btn-danger square fw-bold"
-                                        data-bs-dismiss="modal">Annuler</button>
+                                    <button type="reset" wire.click="close_modal"
+                                        class="btn btn-danger square fw-bold" data-bs-dismiss="modal">Annuler</button>
                                 </div>
                             </div>
                         </div>
@@ -337,17 +411,19 @@
 
                                 <div class=" mt-2 d-flex justify-content-center align-items-center position-relative">
                                     <x-loading-indicator2 />
-                                    <a id="imgupload" class="" onclick="$('#imginput2').trigger('click'); return false;"
-                                        role="button" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                    <a id="imgupload" class=""
+                                        onclick="$('#imginput2').trigger('click'); return false;" role="button"
+                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
                                         title="Clicker pour ajouter la photo du personnel ">
-                                        <img alt="Photo du personnel" hover="Photo du personnel" src="{{ asset($url) }}"
-                                            class="avatar border border-1 " id="avatar" height="150">
+                                        <img alt="Photo du personnel" hover="Photo du personnel"
+                                            src="{{ asset($url) }}" class="avatar border border-1 " id="avatar"
+                                            height="150">
                                     </a>
                                     <input type="file" wire:model="filename2" id="imginput2" class="dimage"
-                                        style="display: none;"  accept="image/*">
+                                        style="display: none;" accept="image/*">
                                     <span class="text-danger">
                                         @error('photo')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
@@ -358,12 +434,12 @@
                                         <span class="input-group-text txt fw-bold  text-white">
                                             <i class="fas fa-user icnbgc"></i>
                                         </span>
-                                        <input type="text" class="form-control" id="nom2" wire:model.defer="nom2"
-                                            placeholder="Nom de l'employé " required>
+                                        <input type="text" class="form-control" id="nom2"
+                                            wire:model.defer="nom2" placeholder="Nom de l'employé " required>
                                     </div>
                                     <span class="text-danger">
                                         @error('nom2')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
@@ -381,23 +457,24 @@
                                     </div>
                                     <span class="text-danger">
                                         @error('date_naissance2')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
 
                                 <div class="mt-2 col-12">
-                                    <label for="adresse2" class="form-label text-muted fw-italic mb-0">Adresse *</label>
+                                    <label for="adresse2" class="form-label text-muted fw-italic mb-0">Adresse
+                                        *</label>
                                     <div class="input-group">
                                         <span class="input-group-text txt fw-bold  text-white">
                                             <i class="fa-solid fa-location-dot icnbgc"></i>
                                         </span>
-                                        <input type="text" class="form-control" id="adresse2" wire:model.defer="adresse2"
-                                            placeholder="Adresse de l'employé" required>
+                                        <input type="text" class="form-control" id="adresse2"
+                                            wire:model.defer="adresse2" placeholder="Adresse de l'employé" required>
                                     </div>
                                     <span class="text-danger">
                                         @error('adresse2')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
@@ -414,7 +491,7 @@
                                     </div>
                                     <span class="text-danger">
                                         @error('telephone2')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
@@ -426,12 +503,12 @@
                                         <span class="input-group-text txt fw-bold  text-white">
                                             <i class="fa-solid fa-at icnbgc"></i>
                                         </span>
-                                        <input type="email" class="form-control" id="email2" wire:model.defer="email2"
-                                            placeholder="L'email de l'employé" required>
+                                        <input type="email" class="form-control" id="email2"
+                                            wire:model.defer="email2" placeholder="L'email de l'employé" required>
                                     </div>
                                     <span class="text-danger">
                                         @error('email2')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
@@ -454,7 +531,7 @@
                                     </div>
                                     <span class="text-danger">
                                         @error('matricule2')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
@@ -474,13 +551,14 @@
                                     </div>
                                     <span class="text-danger">
                                         @error('sexe2')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
 
                                 <div class="mt-2 col-12 ">
-                                    <label for="grade_id2" class="form-label text-muted fw-italic mb-0">Grade *</label>
+                                    <label for="grade_id2" class="form-label text-muted fw-italic mb-0">Grade
+                                        *</label>
                                     <div class="input-group">
                                         <span class="input-group-text txt fw-bold  text-white">
                                             <i class="fa-solid fa-star icnbgc"></i>
@@ -488,13 +566,13 @@
                                         <select wire:model.defer="grade_id2" class="form-select" id="grade_id2">
                                             <option value="" selected>Select</option>
                                             @foreach ($grades as $choi)
-                                            <option value="{{ $choi->id }}">{{ $choi->nom }} </option>
+                                                <option value="{{ $choi->id }}">{{ $choi->nom }} </option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <span class="text-danger">
                                         @error('grade_id2')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
@@ -506,37 +584,40 @@
                                         <span class="input-group-text txt fw-bold  text-white">
                                             <i class="fa-solid fa-cog icnbgc"></i>
                                         </span>
-                                        <select wire:model.defer="fonction_id2" class="form-select" id="fonction_id2">
+                                        <select wire:model.defer="fonction_id2" class="form-select"
+                                            id="fonction_id2">
                                             <option value="" selected>Select</option>
                                             @foreach ($fonctions as $choi)
-                                            <option value="{{ $choi->id }}">{{ $choi->nom }} </option>
+                                                <option value="{{ $choi->id }}">{{ $choi->nom }} </option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <span class="text-danger">
                                         @error('fonction_id2')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
 
                                 <div class="mt-2 col-12 ">
-                                    <label for="departement_id2" class="form-label text-muted fw-italic mb-0">Departement
+                                    <label for="departement_id2"
+                                        class="form-label text-muted fw-italic mb-0">Departement
                                         *</label>
                                     <div class="input-group">
                                         <span class="input-group-text txt fw-bold  text-white">
                                             <i class="fa-solid fa-building icnbgc"></i>
                                         </span>
-                                        <select wire:model.defer="departement_id2" class="form-select" id="departement_id2">
+                                        <select wire:model.defer="departement_id2" class="form-select"
+                                            id="departement_id2">
                                             <option value="" selected>Select</option>
                                             @foreach ($departements as $choi)
-                                            <option value="{{ $choi->id }}">{{ $choi->nom }} </option>
+                                                <option value="{{ $choi->id }}">{{ $choi->nom }} </option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <span class="text-danger">
                                         @error('departement_id2')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
@@ -554,13 +635,14 @@
                                     </div>
                                     <span class="text-danger">
                                         @error('date_embauche2')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
 
                                 <div class="mt-2 col-12 ">
-                                    <label for="username2" class="form-label text-muted fw-italic mb-0">Pseudo *</label>
+                                    <label for="username2" class="form-label text-muted fw-italic mb-0">Pseudo
+                                        *</label>
                                     <div class="input-group">
                                         <span class="input-group-text txt fw-bold  text-white">
                                             <i class="fa-solid fa-font icnbgc"></i>
@@ -570,7 +652,7 @@
                                     </div>
                                     <span class="text-danger">
                                         @error('username2')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
@@ -587,7 +669,7 @@
                                     </div>
                                     <span class="text-danger">
                                         @error('password2')
-                                        {{ $message }}
+                                            {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
@@ -615,8 +697,8 @@
                                 <div class="">
                                     <button type="submit" name="submit"
                                         class="btn btn-success square border-0  fw-bold">Enregistrer</button>
-                                    <button type="reset" wire.click="close_modal" class="btn btn-danger square fw-bold"
-                                        data-bs-dismiss="modal">Annuler</button>
+                                    <button type="reset" wire.click="close_modal"
+                                        class="btn btn-danger square fw-bold" data-bs-dismiss="modal">Annuler</button>
                                 </div>
                             </div>
                         </div>
@@ -627,29 +709,27 @@
 
                         <dl>
                             @foreach ($groupes as $groupe)
+                                <dt>{{ $groupe }}</dt>
 
-                            <dt>{{ $groupe }}</dt>
+                                @php
+                                    $cntcb = 1;
+                                    $cbidedit = 'cbidedit' . $cntcb . $groupe;
+                                @endphp
 
-                            @php
-                            $cntcb = 1;
-                            $cbidedit = 'cbidedit' . $cntcb. $groupe;
-                            @endphp
-
-                            @foreach ($allPermissions as $choi)
-                            @if($choi->groupe == $groupe)
-                            <dd class="ms-3">
-                                <input type="checkbox" class="form-check-input" id="{{ $cbidedit }}"
-                                    value="{{ $choi->id }}" wire:model="selected_permisions">
-                                <label class="form-check-label" for="{{ $cbidedit }}">
-                                    {{ $choi->nom }} | {{ $choi->description }} </label>
-                            </dd>
-                            @endif
-                            @php
-                            $cntcb += 1;
-                            $cbidedit = 'cbidedit' . $cntcb. $groupe;
-                            @endphp
-                            @endforeach
-
+                                @foreach ($allPermissions as $choi)
+                                    @if ($choi->groupe == $groupe)
+                                        <dd class="ms-3">
+                                            <input type="checkbox" class="form-check-input" id="{{ $cbidedit }}"
+                                                value="{{ $choi->id }}" wire:model="selected_permisions">
+                                            <label class="form-check-label" for="{{ $cbidedit }}">
+                                                {{ $choi->nom }} | {{ $choi->description }} </label>
+                                        </dd>
+                                    @endif
+                                    @php
+                                        $cntcb += 1;
+                                        $cbidedit = 'cbidedit' . $cntcb . $groupe;
+                                    @endphp
+                                @endforeach
                             @endforeach
                         </dl>
                     </div>
@@ -658,74 +738,77 @@
         </div>
     </div>
 
- 
 
-    <table class="table table-bordered border-dark table-striped table-hover table-sm align-middle " id="">
+
+    <table class="table table-bordered border-dark table-striped table-hover table-sm align-middle " id=""
+        {{-- wire:poll --}}>
         <thead class="bg-dark text-white text-center">
             <th scope="col">#</th>
             <th scope="col">Photo</th>
             <th scope="col">Matricule</th>
             <th scope="col">Nom</th>
             <th scope="col">Telephone</th>
+            <th scope="col">Grade</th>
             <th scope="col">Fonction</th>
             <th scope="col">Departement</th>
             <th scope="col">Action</th>
         </thead>
         <tbody class="text-center">
             @if ($personnel->isNotEmpty())
-            @php
-            $cnt = 1;
-            $editmodal = 'edit' . $cnt;
-            $delmodal = 'delete' . $cnt;
-            @endphp
+                @php
+                    $cnt = 1;
+                    $editmodal = 'edit' . $cnt;
+                    $delmodal = 'delete' . $cnt;
+                @endphp
 
-            @foreach ($personnel as $key => $user)
-            @php
-            if($user->filename){
-            $pprofil = $user->storage_path;
-            } else {
-            $pprofil = 'https://ui-avatars.com/api/?size=235&name=' . $user->nom;
-            }
-            @endphp
-            <tr>
-                <td>{{ $cnt }}</td>
-                <td><img style="width: 60px; height: 60px; oject-fit: cover;" src="{{ asset($pprofil) }}" alt="Photo"
-                        role="button" {{-- wire:click="showImg('{{ $materiel->id }}')" data-bs-toggle="modal"
+                @foreach ($personnel as $key => $user)
+                    @php
+                        if ($user->filename) {
+                            $pprofil = $user->storage_path;
+                        } else {
+                            $pprofil = 'https://ui-avatars.com/api/?size=235&name=' . $user->nom;
+                        }
+                    @endphp
+                    <tr>
+                        <td>{{ $cnt }}</td>
+                        <td><img style="width: 60px; height: 60px; oject-fit: cover;" src="{{ asset($pprofil) }}"
+                                alt="Photo" role="button" {{-- wire:click="showImg('{{ $materiel->id }}')" data-bs-toggle="modal"
                         data-bs-target="#imgmodal" --}}> </td>
-                <td>{{ $user->matricule }}</td>
-                <td>{{ $user->nom }}</td>
-                <td>{{ $user->telephone }}</td>
-                <td>{{ $user->fonction->nom }}</td>
-                <td>{{ $user->departement->nom }}</td>
-                <td class="td-actions ">
-                    <a class="btn  " data-bs-toggle="modal" data-bs-target="#edit"
-                        wire:click="loadid('{{ $user->id }}')">
-                        <i class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="left"
-                            title="Modifier l'utilisateur "></i>
-                    </a>
-                    <a class="btn  " data-bs-toggle="modal" data-bs-target="#perm"
-                        wire:click="loadid('{{ $user->id }}')">
-                        <i class="fas fa-pen-ruler" data-bs-toggle="tooltip" data-bs-placement="top"
-                            title="Modifier les permissions l'utilisateur "></i>
-                    </a>
-                    <a class="btn  " data-bs-toggle="modal" data-bs-target="#delete"
-                        wire:click="loadid('{{ $user->id }}')">
-                        <i class="fas fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                            title="Supprimer l'utilisateur "></i>
-                    </a>
-                </td>
-            </tr>
+                        <td>{{ $user->matricule }}</td>
+                        <td>{{ $user->nom }}</td>
+                        <td>{{ $user->telephone }}</td>
+                        <td>{{ $user->grade->nom }}</td>
+                        <td>{{ $user->fonction->nom }}</td>
+                        <td>{{ $user->departement->nom }}</td>
+                        <td class="td-actions ">
+                            <a class="btn  " data-bs-toggle="modal" data-bs-target="#edit"
+                                wire:click="loadid('{{ $user->id }}')">
+                                <i class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="left"
+                                    title="Modifier l'utilisateur "></i>
+                            </a>
+                            <a class="btn  " data-bs-toggle="modal" data-bs-target="#perm"
+                                wire:click="loadid('{{ $user->id }}')">
+                                <i class="fas fa-pen-ruler" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="Modifier les permissions l'utilisateur "></i>
+                            </a>
+                            <a class="btn  " data-bs-toggle="modal" data-bs-target="#delete"
+                                wire:click="loadid('{{ $user->id }}')">
+                                <i class="fas fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                    title="Supprimer l'utilisateur "></i>
+                            </a>
+                        </td>
+                    </tr>
 
-            @php
-            $cnt += 1;
-            $editmodal = 'edit' . $cnt;
-            $delmodal = 'delete' . $cnt;
-            @endphp
-            @endforeach
+                    @php
+                        $cnt += 1;
+                        $editmodal = 'edit' . $cnt;
+                        $delmodal = 'delete' . $cnt;
+                    @endphp
+                @endforeach
             @else
-            <tr>
-                <td colspan="10">There are no data.</td>
-            </tr>
+                <tr>
+                    <td colspan="10">There are no data.</td>
+                </tr>
             @endif
 
             <x-delete-modal delmodal="delete" message="Confirmer la suppression " delf="delete" />

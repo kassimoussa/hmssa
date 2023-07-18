@@ -13,9 +13,12 @@ class GestionPatient extends Component
     use WithFileUploads;
 
     public $search = ""; 
-    public $patients, $patient_id, $nom, $nom2, $sexe, $sexe2, $adresse, $adresse2, $matricule, $matricule2,
+    public $patients, $patient_id, $nom, $nom2, $sexe, $sexe2, $gp_sanguin, $gp_sanguin2, $adresse, $adresse2, $matricule, $matricule2,
     $affiliation, $affiliation2, $telephone, $telephone2, $lieu_naissance, $lieu_naissance2, $date_naissance,
     $date_naissance2, $user_id,  $filename, $filename2,  $filename3, $audj, $imgUrl, $url;
+    public $selected_sexe = [];
+    public $selected_groupe = [];
+    public $selected_affiliation = [];
 
     public function mount()
     {
@@ -28,21 +31,33 @@ class GestionPatient extends Component
     public function getPatients()
     {
         $search = $this->search ;
-        $this->patients = Patient::Where(function ($query) use ($search) {
+        /* $this->patients = Patient::Where(function ($query) use ($search) {
             $query->where('matricule', 'Like', '%' . $search . '%')
                 ->orWhere('nom', 'Like', '%' . $search . '%')
                 ->orWhere('telephone', 'Like', '%' . $search . '%')
                 ->orWhere('sexe', 'Like', '%' . $search . '%')
                 ->orWhere('affiliation', 'Like', '%' . $search . '%');
         })->orderBy("created_at", "asc")
-            ->get(); 
+            ->get();  */
+
+            $this->patients =  Patient::whereLike(['matricule', 'nom', 'telephone'], $this->search ?? '')
+            ->when($this->selected_sexe, function ($query, $selected_sexe) {
+                return $query->whereIn('sexe', $selected_sexe);
+            })
+            ->when($this->selected_groupe, function ($query, $selected_groupe) {
+                return $query->whereIn('gp_sanguin', $selected_groupe);
+            })
+            ->when($this->selected_affiliation, function ($query, $selected_affiliation) {
+                return $query->whereIn('affiliation', $selected_affiliation);
+            })
+            ->orderBy("nom", "asc")->get();
     }
      
     public function close_modal()
     {
         $this->reset([
-            'nom', 'matricule', 'sexe', 'adresse', 'affiliation', 'telephone', 'lieu_naissance', 'date_naissance', 'filename', 'filename2', 'filename3'
-            ,'nom2', 'matricule2', 'sexe2', 'adresse2', 'affiliation2', 'telephone2', 'lieu_naissance2', 'date_naissance2',
+            'nom', 'matricule', 'sexe', 'gp_sanguin', 'adresse', 'affiliation', 'telephone', 'lieu_naissance', 'date_naissance', 'filename', 'filename2', 'filename3'
+            ,'nom2', 'matricule2', 'sexe2', 'gp_sanguin2', 'adresse2', 'affiliation2', 'telephone2', 'lieu_naissance2', 'date_naissance2',
         ]);
         $this->url = "images/addphoto.png";
     }
@@ -53,6 +68,7 @@ class GestionPatient extends Component
         $patient->nom = $this->nom;
         $patient->matricule = $this->matricule;
         $patient->sexe = $this->sexe;
+        $patient->gp_sanguin = $this->gp_sanguin;
         $patient->adresse = $this->adresse;
         $patient->affiliation = $this->affiliation;
         $patient->telephone = $this->telephone;
@@ -98,28 +114,30 @@ class GestionPatient extends Component
                 Storage::delete($patient->public_path);
             }
             $query = $patient->update([
-                'nom' => $this->nom,
-                'matricule' => $this->matricule,
-                'sexe' => $this->sexe,
-                'adresse' => $this->adresse,
-                'affiliation' => $this->affiliation,
-                'telephone' => $this->telephone,
-                'lieu_naissance' => $this->lieu_naissance, 
-                'date_naissance' => $this->date_naissance,
+                'nom' => $this->nom2,
+                'matricule' => $this->matricule2,
+                'sexe' => $this->sexe2,
+                'gp_sanguin' => $this->gp_sanguin2,
+                'adresse' => $this->adresse2,
+                'affiliation' => $this->affiliation2,
+                'telephone' => $this->telephone2,
+                'lieu_naissance' => $this->lieu_naissance2, 
+                'date_naissance' => $this->date_naissance2,
                 'filename' => $image_name,
                 'public_path' => $public_path,
                 'storage_path' => $storage_path,
             ]);
         } else {
             $query = $patient->update([
-                'nom' => $this->nom,
-                'matricule' => $this->matricule,
-                'sexe' => $this->sexe,
-                'adresse' => $this->adresse,
-                'affiliation' => $this->affiliation,
-                'telephone' => $this->telephone,
-                'lieu_naissance' => $this->lieu_naissance, 
-                'date_naissance' => $this->date_naissance,
+                'nom' => $this->nom2,
+                'matricule' => $this->matricule2,
+                'sexe' => $this->sexe2,
+                'gp_sanguin' => $this->gp_sanguin2,
+                'adresse' => $this->adresse2,
+                'affiliation' => $this->affiliation2,
+                'telephone' => $this->telephone2,
+                'lieu_naissance' => $this->lieu_naissance2, 
+                'date_naissance' => $this->date_naissance2,
             ]);
         }
         if ($query) {
@@ -146,6 +164,7 @@ class GestionPatient extends Component
         $this->nom2 = $patient->nom;
         $this->matricule2 = $patient->matricule;
         $this->sexe2 = $patient->sexe;
+        $this->gp_sanguin2 = $patient->gp_sanguin;
         $this->adresse2 = $patient->adresse;
         $this->telephone2 = $patient->telephone;
         $this->affiliation2 = $patient->affiliation;

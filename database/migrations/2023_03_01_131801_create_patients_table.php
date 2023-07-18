@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('nom')->nullable();
             $table->string('sexe')->nullable();
+            $table->string('gp_sanguin')->nullable();
             $table->string('adresse')->nullable();
             $table->string('matricule')->nullable();
             $table->string('affiliation')->nullable();

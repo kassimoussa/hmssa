@@ -59,7 +59,8 @@ class HomeController extends Controller
     public function index()
     {
         $level = session('level');
-        return view('1.index');
+
+        return view($level.'.index');
     }
 
 
